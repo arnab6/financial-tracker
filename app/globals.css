@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+body {
+  color: var(--foreground);
+  background: radial-gradient(circle at top center, #1a1a1a 0%, #000000 100%);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Prose Table Styles */
+.prose table {
+  @apply border-collapse border border-zinc-700;
+}
+.prose thead {
+  @apply bg-zinc-800;
+}
+.prose th {
+  @apply border border-zinc-700 px-4 py-2 text-left font-semibold text-zinc-200;
+}
+.prose td {
+  @apply border border-zinc-700 px-4 py-2 text-zinc-300;
+}
+.prose tr:nth-child(even) {
+  @apply bg-zinc-900/50;
+}
