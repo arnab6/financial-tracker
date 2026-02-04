@@ -13,18 +13,25 @@ export default function LoginPage() {
         e.preventDefault();
         setIsLoading(true);
 
-        const res = await fetch("/api/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password }),
-        });
+        try {
+            const res = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+            });
 
-        const json = await res.json();
+            const json = await res.json();
 
-        if (json.success) {
-            router.push("/");
-        } else {
-            alert("Invalid credentials");
+            if (json.success) {
+                // Redirect to dashboard
+                router.push("/");
+                // Keep loading state true so button stays disabled during redirect
+            } else {
+                alert("Invalid credentials");
+                setIsLoading(false);
+            }
+        } catch (error) {
+            alert("Login failed: " + (error instanceof Error ? error.message : "Unknown error"));
             setIsLoading(false);
         }
     };
