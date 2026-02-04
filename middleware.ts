@@ -15,6 +15,11 @@ export function middleware(req: NextRequest) {
         return NextResponse.next();
     }
 
+    // Allow API routes through (so POST/PUT/DELETE reach their handlers)
+    if (req.nextUrl.pathname.startsWith("/api")) {
+        return NextResponse.next();
+    }
+
     // 1. User is NOT logged in and tries to access protected route -> Redirect to Login
     if (!isAuth && !isLoginPage && req.nextUrl.pathname !== "/api/auth/login") {
         return NextResponse.redirect(new URL("/login", req.url));
