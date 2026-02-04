@@ -50,13 +50,19 @@ export default function AnalyticsPage() {
         setLoading(true);
         try {
             const response = await fetch("/api/analytics");
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const result = await response.json();
             if (result.success) {
                 setData(result.data);
                 setFilteredExpenses(result.data.expenses);
+            } else {
+                console.error("API returned success:false", result);
             }
         } catch (error) {
             console.error("Failed to fetch dashboard data:", error);
+            alert("Failed to load analytics: " + (error instanceof Error ? error.message : "Unknown error"));
         } finally {
             setLoading(false);
         }

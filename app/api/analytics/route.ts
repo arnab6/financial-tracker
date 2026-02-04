@@ -3,10 +3,13 @@ import dbConnect from "@/lib/mongodb";
 
 export async function GET(req: NextRequest) {
     try {
+        console.log("[Analytics API] Starting request...");
         const { db } = await dbConnect();
+        console.log("[Analytics API] DB connected successfully");
 
         // Fetch all expenses
         const expenses = await db.collection("expenses").find({}).toArray();
+        console.log(`[Analytics API] Found ${expenses.length} expenses`);
 
         if (!expenses || expenses.length === 0) {
             return NextResponse.json({
@@ -99,9 +102,9 @@ export async function GET(req: NextRequest) {
             }
         });
     } catch (error) {
-        console.error("Analytics error:", error);
+        console.error("[Analytics API] Error:", error);
         return NextResponse.json(
-            { success: false, error: "Failed to fetch analytics" },
+            { success: false, error: error instanceof Error ? error.message : "Failed to fetch analytics" },
             { status: 500 }
         );
     }
