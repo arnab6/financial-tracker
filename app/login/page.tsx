@@ -20,6 +20,15 @@ export default function LoginPage() {
                 body: JSON.stringify({ username, password }),
             });
 
+            // Check if response is JSON
+            const contentType = res.headers.get("content-type");
+            if (!contentType?.includes("application/json")) {
+                const text = await res.text();
+                alert(`API Error (${res.status}): Expected JSON but got ${contentType || "no content"}\n\n${text.substring(0, 200)}`);
+                setIsLoading(false);
+                return;
+            }
+
             const json = await res.json();
 
             if (json.success) {
@@ -27,7 +36,7 @@ export default function LoginPage() {
                 router.push("/");
                 // Keep loading state true so button stays disabled during redirect
             } else {
-                alert("Invalid credentials");
+                alert("Invalid credentials: " + (json.error || "Unknown error"));
                 setIsLoading(false);
             }
         } catch (error) {
