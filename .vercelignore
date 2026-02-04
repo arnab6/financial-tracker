@@ -1,0 +1,9 @@
+# Ignore backend files and local secrets from Vercel upload
+api/
+requirements.txt
+pyproject.toml
+uv.lock
+.env
+test_mongo.py
+.next/
+node_modules/
