@@ -5,8 +5,8 @@ const SESSION_COOKIE_NAME = "auth_session";
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    // Skip middleware for API routes, server routes, and auth routes
-    if (pathname.startsWith("/api") || pathname.startsWith("/auth") || pathname.startsWith("/server")) {
+    // Skip middleware for server routes and auth routes
+    if (pathname.startsWith("/auth") || pathname.startsWith("/server")) {
         return NextResponse.next();
     }
 
@@ -40,7 +40,6 @@ export const config = {
     matcher: [
         /*
          * Match all request paths except for the ones starting with:
-         * - api (API routes - Python serverless)
          * - server (Server routes - Next.js API)
          * - auth (Authentication routes)
          * - _next/static (static files)
@@ -48,6 +47,6 @@ export const config = {
          * - favicon.ico (favicon file)
          * - public files
          */
-        "/((?!api/|server/|auth/|_next/static|_next/image|favicon.ico|.*\\..*).*)",
+        "/((?!server/|auth/|_next/static|_next/image|favicon.ico|.*\\..*).*)",
     ],
 };

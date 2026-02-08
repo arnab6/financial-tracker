@@ -68,7 +68,7 @@ export default function ChatWidget() {
         setMessages(prev => [...prev, { role: 'assistant', content: "" }]);
 
         try {
-            const response = await fetch("/api/chat", {
+            const response = await fetch("/server/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ messages: [...messages, newMsg] })
