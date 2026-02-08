@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import clientPromise from "@/lib/mongodb";
+import dbConnect from "@/lib/mongodb";
 
 interface Message {
     role: string;
@@ -13,8 +13,7 @@ interface ChatRequest {
 // Helper function to get recent expenses
 async function getRecentExpenses(limit: number = 5) {
     try {
-        const client = await clientPromise;
-        const db = client.db("financial_app");
+        const { db } = await dbConnect();
         const expenses = await db.collection("expenses")
             .find({})
             .sort({ date: -1 })
@@ -36,8 +35,7 @@ async function getRecentExpenses(limit: number = 5) {
 // Helper function to get category distribution
 async function getCategoryDistribution() {
     try {
-        const client = await clientPromise;
-        const db = client.db("financial_app");
+        const { db } = await dbConnect();
         const pipeline = [
             { $group: { _id: "$expense_category", total: { $sum: "$amount" } } },
             { $project: { _id: 0, name: "$_id", value: "$total" } }
