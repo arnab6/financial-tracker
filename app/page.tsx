@@ -6,7 +6,7 @@ import Link from "next/link";
 import {
     TrendingUp,
     TrendingDown,
-    DollarSign,
+    IndianRupee,
     ShoppingCart,
     Calendar,
     PlusCircle,
@@ -103,13 +103,13 @@ export default function Home() {
                     >
                         <div className="flex items-center justify-between mb-4">
                             <div className="bg-blue-500/20 p-3 rounded-xl">
-                                <DollarSign className="text-blue-400" size={24} />
+                                <IndianRupee className="text-blue-400" size={24} />
                             </div>
                             <TrendingUp className="text-blue-400" size={20} />
                         </div>
                         <p className="text-gray-400 text-sm mb-1">Total Spent</p>
                         <p className="text-3xl font-bold text-white">
-                            ${loading ? "..." : stats?.totalSpent.toFixed(2)}
+                            ₹{loading ? "..." : stats?.totalSpent.toFixed(2)}
                         </p>
                     </motion.div>
 
@@ -141,7 +141,7 @@ export default function Home() {
                         </div>
                         <p className="text-gray-400 text-sm mb-1">Average Expense</p>
                         <p className="text-3xl font-bold text-white">
-                            ${loading ? "..." : stats?.averageSpent.toFixed(2)}
+                            ₹{loading ? "..." : stats?.averageSpent.toFixed(2)}
                         </p>
                     </motion.div>
 

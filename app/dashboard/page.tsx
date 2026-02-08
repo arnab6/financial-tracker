@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import ReactECharts from "echarts-for-react";
-import { Filter, TrendingUp, DollarSign, ShoppingCart, Calendar } from "lucide-react";
+import { Filter, TrendingUp, IndianRupee, ShoppingCart, Calendar } from "lucide-react";
 
 interface Expense {
     _id: string;
@@ -165,7 +165,7 @@ export default function Dashboard() {
                     />
                     <MetricCard
                         title="Average Expense"
-                        value={`$${data.averageSpent.toFixed(2)}`}
+                        value={`₹${data.averageSpent.toFixed(2)}`}
                         icon={<TrendingUp className="w-6 h-6" />}
                         color="from-green-500 to-green-600"
                     />
@@ -340,7 +340,7 @@ export default function Dashboard() {
                                                     {expense.category}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-3 text-sm font-semibold text-green-400">${expense.amount.toFixed(2)}</td>
+                                            <td className="px-6 py-3 text-sm font-semibold text-green-400">₹{expense.amount.toFixed(2)}</td>
                                             <td className="px-6 py-3 text-sm text-gray-400">{expense.paymentMethod || 'N/A'}</td>
                                         </tr>
                                     ))
@@ -424,7 +424,7 @@ function getPieChartOption(data: any[]) {
             backgroundColor: 'rgba(0, 0, 0, 0.8)',
             borderColor: '#404040',
             textStyle: { color: '#fff' },
-            formatter: '{b}: ${c} ({d}%)'
+            formatter: '{b}: ₹{c} ({d}%)'
         },
         legend: {
             orient: 'vertical',
@@ -443,7 +443,7 @@ function getPieChartOption(data: any[]) {
             },
             label: {
                 show: true,
-                formatter: '{b}\n${c}',
+                formatter: '{b}\n₹{c}',
                 color: '#fff'
             },
             emphasis: {

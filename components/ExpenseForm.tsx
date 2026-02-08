@@ -135,7 +135,7 @@ export default function ExpenseForm() {
                     <div className="col-span-1">
                         <label className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-1 block">Amount</label>
                         <div className="relative">
-                            <span className="absolute left-3 top-3 text-zinc-400">$</span>
+                            <span className="absolute left-3 top-3 text-zinc-400">₹</span>
                             <input
                                 type="number"
                                 value={extractedData.amount || ""}
@@ -178,11 +178,15 @@ export default function ExpenseForm() {
                     {/* Details Grid */}
                     <div className="col-span-1">
                         <label className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-1 block">Payment Method</label>
-                        <input
-                            value={extractedData.payment_method || ""}
+                        <select
+                            value={extractedData.payment_method || "Cash"}
                             onChange={e => updateField('payment_method', e.target.value)}
-                            className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl py-2 px-4 text-white focus:ring-2 focus:ring-emerald-500 outline-none"
-                        />
+                            className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl py-2 px-4 text-white focus:ring-2 focus:ring-emerald-500 outline-none cursor-pointer"
+                        >
+                            <option value="Cash">Cash</option>
+                            <option value="Card">Card</option>
+                            <option value="UPI">UPI</option>
+                        </select>
                     </div>
                     <div className="col-span-1">
                         <label className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-1 block">Spent By</label>
