@@ -9,7 +9,8 @@ const SESSION_SECRET = "super-secret-key-change-this-in-env";
 export async function createSession(res: NextResponse) {
     res.cookies.set(SESSION_COOKIE_NAME, "authenticated", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: false, // Allow cookies in development (localhost)
+        sameSite: "lax",
         maxAge: 60 * 60 * 24 * 7, // 1 week
         path: "/",
     });
