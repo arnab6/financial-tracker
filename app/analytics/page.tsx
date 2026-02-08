@@ -171,8 +171,8 @@ export default function AnalyticsPage() {
                 >
                     <MetricCard
                         title="Total Spent"
-                        value={`$${data.totalSpent.toFixed(2)}`}
-                        icon={<DollarSign className="w-6 h-6" />}
+                        value={`₹${data.totalSpent.toFixed(2)}`}
+                        icon={<IndianRupee className="w-6 h-6" />}
                         gradient="from-blue-600/20 to-blue-600/5"
                         iconColor="blue"
                     />
