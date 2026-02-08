@@ -87,19 +87,22 @@ export default function ChatWidget() {
                 const chunk = decoder.decode(value, { stream: true });
                 const lines = chunk.split('\n');
 
-                let currentEvent: string | null = null;
-
                 for (const line of lines) {
+                    if (line.trim() === '') continue;
+
                     if (line.startsWith("event: ")) {
-                        currentEvent = line.substring(7).trim();
-                    } else if (line.startsWith("data: ")) {
+                        const eventType = line.substring(7).trim();
+                        continue;
+                    }
+                    
+                    if (line.startsWith("data: ")) {
                         const data = line.substring(6);
+                        
+                        // Check if this is a chart event (look back at previous line for event type)
+                        const isChartData = lines[lines.indexOf(line) - 1]?.includes("event: chart");
+                        const isErrorData = lines[lines.indexOf(line) - 1]?.includes("event: error");
 
-                        // sse-starlette sends "data: " then content. 
-                        // If content is empty or pure newline, we might get weird splits.
-                        // But generally it works.
-
-                        if (currentEvent === "chart") {
+                        if (isChartData) {
                             try {
                                 const chartData = JSON.parse(data);
                                 setMessages(prev => {
@@ -113,7 +116,7 @@ export default function ChatWidget() {
                             } catch (e) {
                                 console.error("Failed to parse chart data", e);
                             }
-                        } else if (currentEvent === "error") {
+                        } else if (isErrorData) {
                             accumulatedContent = "Error: " + data;
                             setMessages(prev => {
                                 const newArr = [...prev];
@@ -124,18 +127,9 @@ export default function ChatWidget() {
                                 return newArr;
                             });
                         } else {
-                            // "message" event or default
-                            // data is usually "encoded string" if returned by json.dumps in python?
-                            // In our python code: yield {"event": "message", "data": chunk}
-                            // starlette writes the string as is if valid?
-                            // Actually chunk is already a string.
-                            // If chunk has newlines, SSE might break it?
-                            // Pydantic AI chunks are usually small strings.
-
-                            // Let's assume data is the raw string content.
-
+                            // Regular message streaming
                             accumulatedContent += data;
-
+                            
                             setMessages(prev => {
                                 const newArr = [...prev];
                                 const last = newArr[newArr.length - 1];
@@ -149,6 +143,7 @@ export default function ChatWidget() {
                 }
             }
         } catch (e) {
+            console.error("Chat error:", e);
             setMessages(prev => {
                 const newArr = [...prev];
                 const last = newArr[newArr.length - 1];
