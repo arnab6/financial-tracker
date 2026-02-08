@@ -29,7 +29,7 @@ export default function Home() {
     useEffect(() => {
         const fetchQuickStats = async () => {
             try {
-                const response = await fetch("/api/analytics");
+                const response = await fetch("/server/analytics");
                 const result = await response.json();
                 if (result.success) {
                     const topCat = result.data.categoryData.reduce((max: any, curr: any) =>

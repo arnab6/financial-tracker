@@ -51,7 +51,7 @@ export default function Dashboard() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await fetch("/api/analytics");
+                const response = await fetch("/server/analytics");
                 const result = await response.json();
                 if (result.success) {
                     setData(result.data);

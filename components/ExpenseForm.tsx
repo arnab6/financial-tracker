@@ -44,7 +44,7 @@ export default function ExpenseForm() {
 
         setIsProcessing(true);
         try {
-            const res = await fetch("/api/extract-expense", {
+            const res = await fetch("/server/extract-expense", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ action: "extract", rawText: inputText, date }),
@@ -68,7 +68,7 @@ export default function ExpenseForm() {
     const handleSave = async () => {
         setIsProcessing(true);
         try {
-            const res = await fetch("/api/extract-expense", {
+            const res = await fetch("/server/extract-expense", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

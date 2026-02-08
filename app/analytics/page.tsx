@@ -49,7 +49,7 @@ export default function AnalyticsPage() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const response = await fetch("/api/analytics");
+            const response = await fetch("/server/analytics");
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
