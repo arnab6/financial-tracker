@@ -159,8 +159,8 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                     <MetricCard
                         title="Total Spent"
-                        value={`$${data.totalSpent.toFixed(2)}`}
-                        icon={<DollarSign className="w-6 h-6" />}
+                        value={`₹${data.totalSpent.toFixed(2)}`}
+                        icon={<IndianRupee className="w-6 h-6" />}
                         color="from-blue-500 to-blue-600"
                     />
                     <MetricCard
